@@ -1,0 +1,42 @@
+---
+import Reveal from './Reveal.astro';
+
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  lead?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  heading,
+  lead,
+  align = 'left',
+  class: className = '',
+} = Astro.props;
+
+const alignment =
+  align === 'center' ? 'text-center mx-auto max-w-3xl' : 'max-w-3xl';
+---
+
+<div class={`${alignment} ${className}`}>
+  {
+    eyebrow && (
+      <Reveal>
+        <p class="eyebrow">{eyebrow}</p>
+      </Reveal>
+    )
+  }
+  <Reveal delay={80}>
+    <h2 class="heading mt-6">{heading}</h2>
+  </Reveal>
+  {
+    lead && (
+      <Reveal delay={160}>
+        <p class="lead mt-6">{lead}</p>
+      </Reveal>
+    )
+  }
+</div>

@@ -1,0 +1,39 @@
+---
+import { site, nav } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="on-dark border-t border-line-dark">
+  <div class="shell flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between">
+    <div>
+      <p class="text-[0.9375rem] font-medium">{site.name}</p>
+      <p class="mt-1.5 text-[0.8125rem] text-paper/45">{site.legalName}</p>
+    </div>
+
+    <nav aria-label="Footer">
+      <ul class="flex flex-wrap gap-x-7 gap-y-2">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-[0.8125rem] text-paper/60 transition-colors hover:text-paper"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="text-[0.8125rem] text-paper/45 md:text-right">
+      <p>&copy; {year} {site.name}</p>
+      {
+        /* Renders only once the CSLB licence is active again. See site.ts */
+        site.licenseNumber && <p class="mt-1.5">CSLB Lic. #{site.licenseNumber}</p>
+      }
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,76 @@
+---
+import Reveal from './Reveal.astro';
+import { lightingControl } from '../data/site';
+---
+
+<section id="lighting-control" class="on-dark py-(--spacing-section)">
+  <div class="shell grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
+    <div class="lg:col-span-6">
+      <Reveal>
+        <p class="eyebrow">{lightingControl.eyebrow}</p>
+      </Reveal>
+      <Reveal delay={90}>
+        <h2 class="heading mt-6">{lightingControl.heading}</h2>
+      </Reveal>
+      <Reveal delay={180}>
+        <p class="lead mt-7 max-w-[52ch]">{lightingControl.body}</p>
+      </Reveal>
+    </div>
+
+    <!--
+      PHOTOGRAPHY SLOT: a keypad, a control panel, or a lit room at dusk.
+      Swap the whole <Reveal> below for an <img> at 4:5 or 1:1.
+    -->
+    <Reveal delay={240} class="lg:col-span-6">
+      <div
+        class="relative aspect-4/5 w-full overflow-hidden border border-line-dark sm:aspect-16/10 lg:aspect-4/5"
+      >
+        <div
+          class="absolute inset-0"
+          style="background:
+            radial-gradient(70% 55% at 50% 34%, rgba(169,122,46,0.30) 0%, transparent 70%),
+            linear-gradient(160deg, #17171a 0%, #0e0e10 100%);"
+        >
+        </div>
+
+        <!-- Keypad motif. Placeholder until photography lands. -->
+        <div class="absolute inset-0 grid place-items-center p-8">
+          <div
+            class="w-full max-w-[19rem] rounded-[4px] border border-line-dark bg-ink/80 px-7 py-8 backdrop-blur-sm"
+            style="box-shadow: 0 30px 70px -20px rgba(0,0,0,0.75), 0 0 90px -30px rgba(169,122,46,0.45);"
+          >
+            <p class="text-[0.62rem] tracking-[0.2em] text-paper/35 uppercase">
+              Great Room
+            </p>
+
+            <div class="mt-6 grid gap-5">
+              {
+                ['Entertain', 'Dining', 'Evening', 'Away'].map((scene, i) => (
+                  <div class="flex items-center gap-4">
+                    <span
+                      class="h-2 w-2 shrink-0 rounded-full"
+                      style={
+                        i === 1
+                          ? 'background:#a97a2e; box-shadow:0 0 12px 2px rgba(169,122,46,0.7)'
+                          : 'background:#3a3a40'
+                      }
+                    />
+                    <span
+                      class={`text-[0.875rem] ${i === 1 ? 'text-paper' : 'text-paper/40'}`}
+                    >
+                      {scene}
+                    </span>
+                    <span
+                      class="ml-auto h-px flex-1"
+                      style={`max-width:${[54, 74, 44, 62][i]}px;background:${i === 1 ? 'rgba(169,122,46,0.6)' : '#2a2a2e'}`}
+                    />
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </Reveal>
+  </div>
+</section>

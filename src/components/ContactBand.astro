@@ -1,0 +1,73 @@
+---
+import Reveal from './Reveal.astro';
+import { site, contact } from '../data/site';
+---
+
+<section id="contact" class="on-dark py-(--spacing-section)">
+  <div class="shell grid gap-14 lg:grid-cols-12 lg:gap-20">
+    <div class="lg:col-span-6">
+      <Reveal>
+        <p class="eyebrow">{contact.eyebrow}</p>
+      </Reveal>
+      <Reveal delay={90}>
+        <h2 class="heading mt-6">{contact.heading}</h2>
+      </Reveal>
+      <Reveal delay={170}>
+        <p class="lead mt-6 max-w-[46ch]">{contact.lead}</p>
+      </Reveal>
+
+      <Reveal delay={250}>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href={site.phoneHref} class="btn btn-primary">
+            Call {site.phone}
+          </a>
+          <a href={`mailto:${site.email}`} class="btn btn-ghost">Email us</a>
+        </div>
+      </Reveal>
+    </div>
+
+    <div class="lg:col-span-6 lg:pt-2">
+      <Reveal delay={200}>
+        <dl class="grid gap-px">
+          <div class="border-t border-line-dark py-6">
+            <dt class="text-[0.72rem] tracking-[0.14em] text-paper/45 uppercase">
+              Phone
+            </dt>
+            <dd class="mt-2.5 text-lead">
+              <a
+                href={site.phoneHref}
+                class="transition-colors hover:text-accent"
+              >
+                {site.phone}
+              </a>
+            </dd>
+          </div>
+
+          <div class="border-t border-line-dark py-6">
+            <dt class="text-[0.72rem] tracking-[0.14em] text-paper/45 uppercase">
+              Email
+            </dt>
+            <dd class="mt-2.5 text-lead break-all">
+              <a
+                href={`mailto:${site.email}`}
+                class="transition-colors hover:text-accent"
+              >
+                {site.email}
+              </a>
+            </dd>
+          </div>
+
+          <div class="border-t border-b border-line-dark py-6">
+            <dt class="text-[0.72rem] tracking-[0.14em] text-paper/45 uppercase">
+              Office
+            </dt>
+            <dd class="mt-2.5 text-lead leading-relaxed">
+              {site.address.street}<br />
+              {site.address.city}, {site.address.state} {site.address.zip}
+            </dd>
+          </div>
+        </dl>
+      </Reveal>
+    </div>
+  </div>
+</section>

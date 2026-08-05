@@ -1,0 +1,29 @@
+---
+import Reveal from './Reveal.astro';
+import { serviceArea } from '../data/site';
+---
+
+<section class="py-(--spacing-section)">
+  <div class="shell">
+    <div class="max-w-3xl">
+      <Reveal>
+        <p class="eyebrow">{serviceArea.eyebrow}</p>
+      </Reveal>
+      <Reveal delay={90}>
+        <h2 class="heading mt-6">{serviceArea.heading}</h2>
+      </Reveal>
+    </div>
+
+    <ul class="mt-14 grid grid-cols-2 gap-px sm:grid-cols-3 lg:grid-cols-5">
+      {
+        serviceArea.places.map((place, i) => (
+          <Reveal delay={(i % 5) * 70} as="li">
+            <span class="block border-t border-line pt-5 pb-7 text-[1.0625rem] font-light tracking-tight">
+              {place}
+            </span>
+          </Reveal>
+        ))
+      }
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+import Reveal from './Reveal.astro';
+import { whyUs } from '../data/site';
+---
+
+<section id="why-us" class="py-(--spacing-section)">
+  <div class="shell grid gap-14 lg:grid-cols-12 lg:gap-20">
+    <div class="lg:col-span-6">
+      <Reveal>
+        <p class="eyebrow">{whyUs.eyebrow}</p>
+      </Reveal>
+      <Reveal delay={90}>
+        <h2 class="heading mt-6">{whyUs.heading}</h2>
+      </Reveal>
+    </div>
+
+    <div class="lg:col-span-6">
+      <Reveal delay={140}>
+        <p class="lead">{whyUs.lead}</p>
+      </Reveal>
+
+      <ul class="mt-12">
+        {
+          whyUs.points.map((point, i) => (
+            <Reveal delay={200 + i * 90} as="li">
+              <span class="flex items-start gap-5 border-t border-line py-5">
+                <span
+                  class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                  aria-hidden="true"
+                />
+                <span class="text-[1.0625rem] leading-relaxed">{point}</span>
+              </span>
+            </Reveal>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

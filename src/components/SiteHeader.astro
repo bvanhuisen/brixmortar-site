@@ -1,0 +1,86 @@
+---
+import { site, nav } from '../data/site';
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-40 transition-colors duration-300"
+  data-header
+>
+  <div class="shell flex items-center justify-between gap-6 py-5">
+    <a
+      href="/"
+      class="flex items-baseline gap-2.5 text-paper transition-colors"
+      data-header-brand
+    >
+      <span class="text-[1.0625rem] font-medium tracking-tight">Heritage</span>
+      <span class="text-[1.0625rem] font-light tracking-tight opacity-70">
+        Electric
+      </span>
+    </a>
+
+    <nav class="hidden lg:block" aria-label="Primary">
+      <ul class="flex items-center gap-9">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="relative py-2 text-[0.875rem] font-normal text-paper/80 transition-colors hover:text-paper"
+                data-header-link
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a
+      href={site.phoneHref}
+      class="btn btn-ghost hidden text-paper sm:inline-flex"
+      data-header-cta
+    >
+      {site.phone}
+    </a>
+
+    <a
+      href={site.phoneHref}
+      class="btn btn-primary sm:hidden"
+      aria-label={`Call ${site.phone}`}
+    >
+      Call
+    </a>
+  </div>
+  <div class="shell"><hr class="rule opacity-20" data-header-rule /></div>
+</header>
+
+<script>
+  // Header sits transparent over the hero, then goes solid once scrolled.
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const tinted = ['bg-paper/95', 'backdrop-blur', 'shadow-[0_1px_0_#ded9cf]'];
+
+  const swap = (dark: boolean) => {
+    if (!header) return;
+
+    tinted.forEach((c) => header.classList.toggle(c, dark));
+
+    header
+      .querySelectorAll<HTMLElement>(
+        '[data-header-brand],[data-header-link],[data-header-cta]',
+      )
+      .forEach((el) => {
+        el.classList.toggle('text-paper', !dark);
+        el.classList.toggle('text-paper/80', false);
+        el.classList.toggle('text-ink', dark);
+      });
+
+    header
+      .querySelector('[data-header-rule]')
+      ?.classList.toggle('opacity-0', dark);
+  };
+
+  const onScroll = () => swap(window.scrollY > 80);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
