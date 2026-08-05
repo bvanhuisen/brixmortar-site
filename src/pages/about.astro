@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import PageHero from '../components/PageHero.astro';
+import StatBand from '../components/StatBand.astro';
+import About from '../components/About.astro';
+import ServiceArea from '../components/ServiceArea.astro';
+import ContactBand from '../components/ContactBand.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+import { site, pages } from '../data/site';
+---
+
+<BaseLayout title={`About | ${site.name}`} description={pages.about.lead}>
+  <SiteHeader />
+
+  <main id="main">
+    <PageHero
+      eyebrow={pages.about.eyebrow}
+      heading={pages.about.heading}
+      lead={pages.about.lead}
+    />
+    <StatBand />
+    <About />
+    <ServiceArea />
+    <ContactBand />
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import LightingControl from '../components/LightingControl.astro';
+import WhyUs from '../components/WhyUs.astro';
+import ContactBand from '../components/ContactBand.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+import { site, pages } from '../data/site';
+---
+
+<BaseLayout
+  title={`Services | ${site.name}`}
+  description={pages.services.lead}
+>
+  <SiteHeader />
+
+  <main id="main">
+    <PageHero
+      eyebrow={pages.services.eyebrow}
+      heading={pages.services.heading}
+      lead={pages.services.lead}
+    />
+    <ServiceGrid
+      eyebrow="Capabilities"
+      heading="Every part of the electrical scope"
+      lead="This list reflects the work we take on today. Tell us what the drawings call for and we will tell you plainly whether it is something we do."
+    />
+    <LightingControl />
+    <WhyUs />
+    <ContactBand />
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

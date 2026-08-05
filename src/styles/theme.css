@@ -11,22 +11,46 @@
    ========================================================================== */
 
 @theme {
-  /* --- Brand ------------------------------------------------------------ */
-  --color-ink: #0e0e10;
-  --color-ink-soft: #3a3a40;
-  --color-ink-muted: #6b6b73;
-  --color-paper: #fbfaf7;
-  --color-paper-alt: #f2f0ea;
-  --color-line: #ded9cf;
-  --color-line-dark: #2a2a2e;
-  --color-accent: #a97a2e;
-  --color-accent-hover: #8c6524;
-  --color-accent-tint: #f5eddd;
+  /* --- Brand ------------------------------------------------------------
+     Palette derived from Aramco's published brand colours.
 
-  /* --- Type ------------------------------------------------------------- */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+     SOURCED:  Aramco Green #006633 is their stated primary (confirmed across
+               their brand portal and multiple brand-colour references).
+     DERIVED:  The tints/shades below are my own steps off that green, built
+               to hold WCAG contrast. They are not Aramco values.
+     UNKNOWN:  Aramco Blue is the second primary in their nine-colour system,
+               but the exact hex is behind their brand portal, which is
+               unreachable from this environment. --color-secondary is a
+               PLACEHOLDER. Replace it when you have the real value.
+     -------------------------------------------------------------------- */
+  --color-brand: #006633;
+  --color-brand-dark: #004d26;
+  --color-brand-deep: #002d17;
+  --color-brand-tint: #e6f0ea;
+  --color-secondary: #0a4a6e; /* PLACEHOLDER, see note above */
+
+  --color-ink: #1c1f1d;
+  --color-ink-soft: #4a4f4c;
+  --color-ink-muted: #767b78;
+  --color-paper: #ffffff;
+  --color-paper-alt: #f4f6f4;
+  --color-line: #dcdfdd;
+  --color-line-dark: #143a26;
+
+  /* Aliases so components stay palette-agnostic. */
+  --color-accent: var(--color-brand);
+  --color-accent-hover: var(--color-brand-dark);
+  --color-accent-tint: var(--color-brand-tint);
+
+  /* --- Type -------------------------------------------------------------
+     Aramco uses a commissioned typeface that is not publicly licensable.
+     Manrope is the closest free equivalent: geometric-humanist with the
+     same softened, slightly rounded terminals. Swap here if the client
+     licenses something closer.
+     -------------------------------------------------------------------- */
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
     sans-serif;
-  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
 
   /* Fluid display sizes. Spacious density: large steps, tight tracking. */
   --text-display: clamp(2.75rem, 1.6rem + 4.6vw, 5.75rem);
@@ -137,7 +161,7 @@
     font-size: var(--text-display);
     line-height: var(--text-display--line-height);
     letter-spacing: var(--text-display--letter-spacing);
-    font-weight: 300;
+    font-weight: 500;
     text-wrap: balance;
   }
 
@@ -146,7 +170,7 @@
     font-size: var(--text-h2);
     line-height: var(--text-h2--line-height);
     letter-spacing: var(--text-h2--letter-spacing);
-    font-weight: 300;
+    font-weight: 500;
     text-wrap: balance;
   }
 
@@ -213,16 +237,26 @@
 
   /* Dark section inversion. Add `on-dark` to any section wrapper. */
   .on-dark {
-    background-color: var(--color-ink);
+    background-color: var(--color-brand-deep);
     color: var(--color-paper);
+  }
+
+  .on-dark .btn-primary {
+    background-color: var(--color-paper);
+    color: var(--color-brand-deep);
+  }
+
+  .on-dark .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--color-paper) 88%, transparent);
   }
 
   .on-dark .lead {
     color: color-mix(in srgb, var(--color-paper) 72%, transparent);
   }
 
+  /* Brand green on the deep-green ground fails contrast. Light it up. */
   .on-dark .eyebrow {
-    color: var(--color-accent);
+    color: color-mix(in srgb, var(--color-paper) 78%, transparent);
   }
 }
 

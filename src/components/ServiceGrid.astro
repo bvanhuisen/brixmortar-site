@@ -2,25 +2,50 @@
 import Reveal from './Reveal.astro';
 import SectionHead from './SectionHead.astro';
 import { whatWeDo } from '../data/site';
+
+interface Props {
+  /** Show only the first N services. Omit for all of them. */
+  limit?: number;
+  /** Renders a link under the grid, e.g. to the full services page. */
+  moreHref?: string;
+  moreLabel?: string;
+  eyebrow?: string;
+  heading?: string;
+  lead?: string;
+  tone?: 'light' | 'alt';
+}
+
+const {
+  limit,
+  moreHref,
+  moreLabel = 'All services',
+  eyebrow = whatWeDo.eyebrow,
+  heading = whatWeDo.heading,
+  lead = whatWeDo.lead,
+  tone = 'light',
+} = Astro.props;
+
+const services = limit
+  ? whatWeDo.services.slice(0, limit)
+  : whatWeDo.services;
 ---
 
-<section id="what-we-do" class="py-(--spacing-section)">
+<section
+  id="what-we-do"
+  class={`py-(--spacing-section) ${tone === 'alt' ? 'bg-paper-alt' : ''}`}
+>
   <div class="shell">
-    <SectionHead
-      eyebrow={whatWeDo.eyebrow}
-      heading={whatWeDo.heading}
-      lead={whatWeDo.lead}
-    />
+    <SectionHead eyebrow={eyebrow} heading={heading} lead={lead} />
 
     <div class="mt-16 grid gap-px border-t border-line sm:grid-cols-2 lg:grid-cols-4">
       {
-        whatWeDo.services.map((service, i) => (
+        services.map((service, i) => (
           <Reveal delay={(i % 4) * 90}>
             <article class="group h-full border-b border-line pt-8 pb-10 sm:pr-8">
-              <p class="text-[0.72rem] font-medium tracking-[0.14em] text-ink-muted tabular-nums">
+              <p class="text-[0.72rem] font-semibold tracking-[0.14em] text-accent tabular-nums">
                 {String(i + 1).padStart(2, '0')}
               </p>
-              <h3 class="mt-5 text-h3 font-medium">{service.title}</h3>
+              <h3 class="mt-5 text-h3 font-semibold">{service.title}</h3>
               <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink-soft">
                 {service.body}
               </p>
@@ -30,5 +55,19 @@ import { whatWeDo } from '../data/site';
         ))
       }
     </div>
+
+    {
+      moreHref && (
+        <Reveal delay={140}>
+          <a
+            href={moreHref}
+            class="group mt-12 inline-flex items-center gap-3 text-[0.9375rem] font-semibold text-accent"
+          >
+            {moreLabel}
+            <span class="h-px w-8 bg-accent transition-[width] duration-300 ease-(--ease-out-soft) group-hover:w-12" />
+          </a>
+        </Reveal>
+      )
+    }
   </div>
 </section>

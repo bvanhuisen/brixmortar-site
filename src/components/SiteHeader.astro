@@ -1,86 +1,132 @@
 ---
 import { site, nav } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href.replace(/\/$/, '');
 ---
 
-<header
-  class="fixed inset-x-0 top-0 z-40 transition-colors duration-300"
-  data-header
->
-  <div class="shell flex items-center justify-between gap-6 py-5">
-    <a
-      href="/"
-      class="flex items-baseline gap-2.5 text-paper transition-colors"
-      data-header-brand
-    >
-      <span class="text-[1.0625rem] font-medium tracking-tight">Heritage</span>
-      <span class="text-[1.0625rem] font-light tracking-tight opacity-70">
-        Electric
-      </span>
-    </a>
+<header class="fixed inset-x-0 top-0 z-40" data-header>
+  <div
+    class="transition-colors duration-300"
+    data-header-bar
+  >
+    <div class="shell flex items-center justify-between gap-6 py-5">
+      <a
+        href="/"
+        class="flex items-baseline gap-2 text-current"
+        aria-label={`${site.name}, home`}
+      >
+        <span class="text-[1.0625rem] font-bold tracking-tight">Heritage</span>
+        <span class="text-[1.0625rem] font-normal tracking-tight opacity-65">
+          Electric
+        </span>
+      </a>
 
-    <nav class="hidden lg:block" aria-label="Primary">
-      <ul class="flex items-center gap-9">
+      <nav class="hidden lg:block" aria-label="Primary">
+        <ul class="flex items-center gap-9">
+          {
+            nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  class="relative block py-2 text-[0.875rem] font-medium text-current transition-opacity hover:opacity-100 aria-[current=page]:opacity-100"
+                  style={isActive(item.href) ? '' : 'opacity:0.72'}
+                >
+                  {item.label}
+                  {isActive(item.href) && (
+                    <span class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-current" />
+                  )}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a
+          href={site.phoneHref}
+          class="btn btn-ghost hidden text-current sm:inline-flex"
+        >
+          {site.phone}
+        </a>
+
+        <button
+          type="button"
+          class="btn btn-ghost !min-h-11 !px-4 text-current lg:hidden"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          data-menu-toggle
+        >
+          <span data-menu-label>Menu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile navigation -->
+  <div
+    id="mobile-nav"
+    class="on-dark hidden border-t border-line-dark lg:hidden"
+    data-mobile-nav
+  >
+    <nav class="shell py-4" aria-label="Mobile">
+      <ul>
         {
           nav.map((item) => (
             <li>
               <a
                 href={item.href}
-                class="relative py-2 text-[0.875rem] font-normal text-paper/80 transition-colors hover:text-paper"
-                data-header-link
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class="block border-b border-line-dark py-4 text-[1.0625rem] font-medium aria-[current=page]:text-accent"
               >
                 {item.label}
               </a>
             </li>
           ))
         }
+        <li>
+          <a
+            href={site.phoneHref}
+            class="block py-4 text-[1.0625rem] font-semibold text-accent"
+          >
+            {site.phone}
+          </a>
+        </li>
       </ul>
     </nav>
-
-    <a
-      href={site.phoneHref}
-      class="btn btn-ghost hidden text-paper sm:inline-flex"
-      data-header-cta
-    >
-      {site.phone}
-    </a>
-
-    <a
-      href={site.phoneHref}
-      class="btn btn-primary sm:hidden"
-      aria-label={`Call ${site.phone}`}
-    >
-      Call
-    </a>
   </div>
-  <div class="shell"><hr class="rule opacity-20" data-header-rule /></div>
 </header>
 
 <script>
-  // Header sits transparent over the hero, then goes solid once scrolled.
   const header = document.querySelector<HTMLElement>('[data-header]');
-  const tinted = ['bg-paper/95', 'backdrop-blur', 'shadow-[0_1px_0_#ded9cf]'];
+  const bar = document.querySelector<HTMLElement>('[data-header-bar]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const label = document.querySelector<HTMLElement>('[data-menu-label]');
+  const mobileNav = document.querySelector<HTMLElement>('[data-mobile-nav]');
 
-  const swap = (dark: boolean) => {
-    if (!header) return;
+  // Every page opens on a dark hero, so the header starts light-on-dark and
+  // flips to a solid white bar once you scroll past it.
+  const solid = ['bg-white', 'text-ink', 'shadow-[0_1px_0_#dcdfdd]'];
 
-    tinted.forEach((c) => header.classList.toggle(c, dark));
+  const applyScrollState = () => {
+    if (!bar || !header) return;
+    const scrolled = window.scrollY > 80;
+    const menuOpen = toggle?.getAttribute('aria-expanded') === 'true';
 
-    header
-      .querySelectorAll<HTMLElement>(
-        '[data-header-brand],[data-header-link],[data-header-cta]',
-      )
-      .forEach((el) => {
-        el.classList.toggle('text-paper', !dark);
-        el.classList.toggle('text-paper/80', false);
-        el.classList.toggle('text-ink', dark);
-      });
-
-    header
-      .querySelector('[data-header-rule]')
-      ?.classList.toggle('opacity-0', dark);
+    solid.forEach((c) => bar.classList.toggle(c, scrolled && !menuOpen));
+    header.classList.toggle('text-white', !scrolled || !!menuOpen);
   };
 
-  const onScroll = () => swap(window.scrollY > 80);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  applyScrollState();
+  window.addEventListener('scroll', applyScrollState, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    mobileNav?.classList.toggle('hidden', open);
+    if (label) label.textContent = open ? 'Menu' : 'Close';
+    applyScrollState();
+  });
 </script>

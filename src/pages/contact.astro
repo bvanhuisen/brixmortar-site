@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import PageHero from '../components/PageHero.astro';
+import Reveal from '../components/Reveal.astro';
+import ServiceArea from '../components/ServiceArea.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+import { site, pages, partners } from '../data/site';
+
+const details = [
+  { label: 'Phone', value: site.phone, href: site.phoneHref },
+  { label: 'Email', value: site.email, href: `mailto:${site.email}` },
+];
+
+const mapQuery = encodeURIComponent(
+  `${site.address.street}, ${site.address.city}, ${site.address.state} ${site.address.zip}`,
+);
+---
+
+<BaseLayout title={`Contact | ${site.name}`} description={pages.contact.lead}>
+  <SiteHeader />
+
+  <main id="main">
+    <PageHero
+      eyebrow={pages.contact.eyebrow}
+      heading={pages.contact.heading}
+      lead={pages.contact.lead}
+    />
+
+    <section class="py-(--spacing-section)">
+      <div class="shell grid gap-14 lg:grid-cols-12 lg:gap-20">
+        <div class="lg:col-span-7">
+          <dl class="grid">
+            {
+              details.map((item, i) => (
+                <Reveal delay={i * 100}>
+                  <div class="border-t border-line py-7">
+                    <dt class="text-[0.72rem] font-semibold tracking-[0.14em] text-ink-muted uppercase">
+                      {item.label}
+                    </dt>
+                    <dd class="mt-3 text-h3">
+                      <a
+                        href={item.href}
+                        class="font-semibold break-all transition-colors hover:text-accent"
+                      >
+                        {item.value}
+                      </a>
+                    </dd>
+                  </div>
+                </Reveal>
+              ))
+            }
+
+            <Reveal delay={200}>
+              <div class="border-t border-b border-line py-7">
+                <dt class="text-[0.72rem] font-semibold tracking-[0.14em] text-ink-muted uppercase">
+                  Office
+                </dt>
+                <dd class="mt-3 text-h3 leading-snug font-semibold">
+                  {site.address.street}<br />
+                  {site.address.city}, {site.address.state} {site.address.zip}
+                </dd>
+                <dd class="mt-4">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex items-center gap-3 text-[0.9375rem] font-semibold text-accent"
+                  >
+                    Open in Maps
+                    <span class="h-px w-8 bg-accent transition-[width] duration-300 ease-(--ease-out-soft) group-hover:w-12" />
+                  </a>
+                </dd>
+              </div>
+            </Reveal>
+          </dl>
+
+          <Reveal delay={280}>
+            <div class="mt-12 flex flex-wrap gap-4">
+              <a href={site.phoneHref} class="btn btn-primary">
+                Call {site.phone}
+              </a>
+              <a href={`mailto:${site.email}`} class="btn btn-ghost">
+                Email us
+              </a>
+            </div>
+          </Reveal>
+        </div>
+
+        <div class="lg:col-span-5">
+          <Reveal delay={180}>
+            <div class="bg-paper-alt p-9">
+              <p class="eyebrow">Before you call</p>
+              <p class="lead mt-6">
+                If you have drawings, send them with your email. Plans, a
+                lighting schedule, or even a rough floor plan let us give you a
+                far more useful answer than a phone call alone.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={260}>
+            <div class="mt-8 border-t border-line pt-8">
+              <p class="eyebrow">{partners.eyebrow}</p>
+              <ul class="mt-6 grid gap-3">
+                {
+                  partners.items.map((item) => (
+                    <li class="text-[0.9375rem] text-ink-soft">{item}</li>
+                  ))
+                }
+              </ul>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+
+    <ServiceArea />
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

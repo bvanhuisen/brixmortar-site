@@ -27,11 +27,9 @@ export const site = {
 };
 
 export const nav = [
-  { label: 'What we do', href: '#what-we-do' },
-  { label: 'Lighting control', href: '#lighting-control' },
-  { label: 'Why us', href: '#why-us' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Services', href: '/services' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export const hero = {
@@ -147,4 +145,29 @@ export const contact = {
   eyebrow: 'Contact',
   heading: 'Tell us about the project',
   lead: 'Call the office or send an email and we will get back to you.',
+};
+
+/** Interior page heroes. */
+export const pages = {
+  services: {
+    eyebrow: 'Services',
+    heading: 'What we handle on a custom home',
+    lead: 'From plan review through final trim, on new builds and on remodels. Most of our work comes through builders and architects we have known for years.',
+  },
+  about: {
+    eyebrow: 'About',
+    heading: 'Thirty years of custom homes, run out of Campbell',
+    lead: 'Independently owned since Dave Murray started the company, and still working the same South Bay communities.',
+  },
+  contact: {
+    eyebrow: 'Contact',
+    heading: 'Talk to us about your project',
+    lead: 'Call the office during business hours or send an email with the drawings. We will get back to you.',
+  },
+};
+
+export const homeServicesPreview = {
+  eyebrow: 'What we do',
+  heading: 'The electrical on luxury new construction and remodels',
+  lead: 'A good part of it is lighting, which means the design, the control system, and the software that keeps it running afterward.',
 };

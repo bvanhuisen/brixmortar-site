@@ -11,7 +11,7 @@ import ServiceArea from '../components/ServiceArea.astro';
 import ContactBand from '../components/ContactBand.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
-import { site, hero } from '../data/site';
+import { site, hero, homeServicesPreview } from '../data/site';
 ---
 
 <BaseLayout title={`${site.name} | ${site.tagline}`} description={hero.lead}>
@@ -20,7 +20,14 @@ import { site, hero } from '../data/site';
   <main id="main">
     <Hero />
     <StatBand />
-    <ServiceGrid />
+    <ServiceGrid
+      limit={4}
+      moreHref="/services"
+      moreLabel="All services"
+      eyebrow={homeServicesPreview.eyebrow}
+      heading={homeServicesPreview.heading}
+      lead={homeServicesPreview.lead}
+    />
     <LightingControl />
     <WhyUs />
     <About />
