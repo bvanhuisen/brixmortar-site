@@ -100,7 +100,7 @@ Campbell, CA 95008
 (408) 253-8946
 dmurray@heritageelectric.com
 
-CSLB License #[TO CONFIRM, see notes]
+[License number withheld pending renewal, see notes]
 
 ---
 
@@ -108,13 +108,24 @@ CSLB License #[TO CONFIRM, see notes]
 
 ## Must resolve before launch
 
-1. **License number.** California requires a contractor's licence number on
-   advertising, including websites (B&P Code 7030.5). It is absent from the
-   current site. BuildZoom lists 376352 for Heritage Electric and shows it as
-   inactive when last checked. That is third party data and may be stale or the
-   wrong entity. Verify at cslb.ca.gov before publishing anything.
+1. **License number — confirmed inactive (2026-08-05).** Client confirmed the
+   CSLB licence is currently inactive; it is not stale third-party data. Do
+   not publish a licence number until it is reactivated. Site ships without
+   one in the meantime. This is separate from a copy decision: advertising
+   electrical contracting work under an inactive licence is a compliance
+   issue in California independent of what the website says, and it is
+   between Heritage Electric and CSLB to resolve, not something to word
+   around. Once the licence is active again, add the number back to the
+   Contact section and anywhere else it is legally required.
 
-2. **"Power to solar systems"** is ambiguous in the original. Written here as
+2. **Services list pending.** Client is waiting on the office manager for the
+   complete, current list of services and capabilities. The "What we do" and
+   "We specialize in" sections below are drafted from the old site's copy
+   only — treat as provisional until the office manager's list comes back,
+   then reconcile (additions, drops, and any wording specific to how they
+   describe the work now).
+
+3. **"Power to solar systems"** is ambiguous in the original. Written here as
    "power connections for solar systems." Confirm what it actually covers.
 
 ## Cut, and why
