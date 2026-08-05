@@ -1,12 +1,46 @@
 ---
 import '../styles/theme.css';
+import { site, serviceArea } from '../data/site';
 
 interface Props {
   title: string;
   description: string;
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+
+/**
+ * LocalBusiness markup. This is what puts the phone number, address and
+ * service area into search results for a local contractor.
+ *
+ * Deliberately omitted: any licence, certification or award claim. Nothing
+ * goes in here that has not been confirmed by the client.
+ */
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Electrician',
+  name: site.name,
+  legalName: site.legalName,
+  url: canonical.origin,
+  telephone: site.phone,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    postalCode: site.address.zip,
+    addressCountry: 'US',
+  },
+  areaServed: serviceArea.places.map((name) => ({
+    '@type': 'City',
+    name,
+  })),
+  description: site.tagline,
+};
 ---
 
 <!doctype html>
@@ -14,13 +48,22 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={Astro.url.href} />
+    <link rel="canonical" href={canonical.href} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#006633" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,12 +71,17 @@ const { title, description } = Astro.props;
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
     />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(schema)}
+    />
   </head>
 
   <body>
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-3 focus:text-paper"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-brand focus:px-4 focus:py-3 focus:text-white"
     >
       Skip to content
     </a>
@@ -41,8 +89,8 @@ const { title, description } = Astro.props;
     <slot />
 
     <script>
-      // Scroll reveal. Progressive enhancement: without JS everything is
-      // already visible because .is-visible is applied up front on failure.
+      // Scroll reveal. Falls back to fully visible if anything is unavailable,
+      // so the page is never blank.
       const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
 
       const reduceMotion = window.matchMedia(

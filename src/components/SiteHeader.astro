@@ -79,7 +79,7 @@ const isActive = (href: string) => path === href.replace(/\/$/, '');
               <a
                 href={item.href}
                 aria-current={isActive(item.href) ? 'page' : undefined}
-                class="block border-b border-line-dark py-4 text-[1.0625rem] font-medium aria-[current=page]:text-accent"
+                class="block border-b border-line-dark py-4 text-[1.0625rem] font-medium text-white/80 aria-[current=page]:text-white aria-[current=page]:font-semibold"
               >
                 {item.label}
               </a>
@@ -89,7 +89,7 @@ const isActive = (href: string) => path === href.replace(/\/$/, '');
         <li>
           <a
             href={site.phoneHref}
-            class="block py-4 text-[1.0625rem] font-semibold text-accent"
+            class="block py-4 text-[1.0625rem] font-semibold text-white"
           >
             {site.phone}
           </a>

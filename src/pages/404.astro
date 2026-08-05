@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title={`Page not found | ${site.name}`}
+  description="That page does not exist."
+  noindex
+>
+  <SiteHeader />
+
+  <main id="main" class="on-dark grid min-h-[80svh] place-items-center">
+    <div class="shell-narrow py-24 text-center">
+      <p class="eyebrow justify-center">404</p>
+      <h1 class="heading mt-6">That page does not exist</h1>
+      <p class="lead mx-auto mt-6 max-w-[46ch]">
+        It may have moved, or the link may be wrong. Try the services page, or
+        call the office and we will point you the right way.
+      </p>
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <a href="/" class="btn btn-primary">Back to home</a>
+        <a href={site.phoneHref} class="btn btn-ghost">Call {site.phone}</a>
+      </div>
+    </div>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>
